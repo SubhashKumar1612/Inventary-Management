@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript FinalAssignment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer type="module" src="finalAssignment.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- toast  button -->
+          <div class="toast">
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            <div class="toast-body text-success">
+            item is delete 
+            </div>
+        </div>
+        
+        <div class="row my-3">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                  <div class="text-center mt-2">
+                    <h3 class=""><strong>Inventory Management</strong></h3>
+                    <p class="text-secondary text-sm">Manage your inventory items and stock levels</p>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-2 mt-2  ms-auto">
+                <div class="col-md-8  text-center">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                          </svg> Add Item
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content text-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">Add Inventory Item</h5>
+                        <button type="button" class="btn-close cancel" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Registration Form -->
+                        <form id="form" action="/" class="row justify-content-center">
+                            <div class="col-md-10 mb-3">
+                                <label for="itemname">Item Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="itemname" >
+                                <div class="error text-danger"></div>
+                            </div>
+                            <div class="col-md-10 mb-3">
+                                <label for="category">Category<span class="text-danger">*</span></label><br>
+                                <select class="form-select" id="category" aria-label="Default select example">
+                                    <option selected value="Writing Instruments">Writing Instruments</option>
+                                    <option value="Paper Products">Paper Products</option>
+                                    <option value="Office Supplies">Office Supplies</option>
+                                    <option value="other" id="other">Other</option>
+                                    <input type="text" class="form-control d-none" id="other-input" >
+                                </select>
+                                <input type="text" id="newText" class="d-none" placeholder="Enter new category">
+                                <div class="error text-danger"></div>
+                            </div>
+                            
+                            <div class="col-md-10 mb-3">
+                                <label for="stockLevel">stock level<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="stockLevel" >
+                                <div class="error text-danger"></div>
+                            </div>
+                            <div class="col-md-10 mb-3">
+                                <label for="reorderLevel">Reorder level<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="reorderLevel">
+                                <div class="error text-danger"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+                        <button id="submit-btn" type="submit" class="btn btn-primary">Add item</button>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+<!-- search element -->
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by Item Name, Category, or Stock Level"/>
+            </div>
+        </div>
+
+
+        <!-- Table -->
+        <div class="col-12">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>CATEGORY</th>
+                        <th>STOCK LEVEL</th>
+                        <th>REORDER LEVEL</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="student-list">
+                    <tr>
+                        <td>Ballpoint pens(pack of 12)</td>
+                        <td>writing instruments</td>
+                        <td>45</td>
+                        <td>20</td>
+                        <td>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart2 text-warning me-2" viewBox="0 0 16 16">
+                                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                              </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil text-primary me-2" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                              </svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3 text-danger" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                              </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <section class="my-5" >
+          <h1 class="text-center  my-5">Buyed Stock</h1>
+          <div class="col-md-12  d-flex" id="card">
+          </div>
+      </section> 
+
+      <button id="viewBoughtItems" class="btn btn-primary my-5">View Carted Items</button>
+
+    </div>
+
+
+      <!-- Modal for buy item-->
+<div class="modal fade" id="buy" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="buyForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="buyModalLabel">Buy Stock</h5>
+            
+            <button type="button" class="btn-close cancel" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body buystock">
+            <div class="form-group">
+              <label for="quantity">Quantity to Buy <span class="text-danger">*</span></label>
+              <input type="number" id="quantity" class="form-control" />
+              <div class="error text-danger"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success buybtn">Buy Stock</button>
+            <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+
+<!-- Deletion Confirmation Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete this item?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>
