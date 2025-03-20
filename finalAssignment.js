@@ -102,7 +102,7 @@ const showData = () => {
     const list = document.querySelector('.student-list');
     list.innerHTML = '';
     data.forEach((data, i) => {
-        const warningIcon = data.stockLevel <= data.reorderLevel
+        const warningIcon = Number(data.stockLevel) <= Number(data.reorderLevel)
         ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
               <path d="M7.938 2.016a.13.13 0 0 1 .125 0l6.857 11.856c.03.053.041.11.033.166a.13.13 0 0 1-.125.096H1.172a.13.13 0 0 1-.125-.096.13.13 0 0 1 .033-.166L7.938 2.016zM8 5.5c-.535 0-.954.43-.995.912L7 10.5c0 .514.41.932.923.995.514.064.986-.31.995-.923l.005-.077-.01-4.076c0-.513-.41-.932-.923-.995A.999.999 0 0 0 8 5.5zm.002 6.025a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
           </svg>`
@@ -142,7 +142,6 @@ const showData = () => {
 submitbtn.addEventListener('click', (e) => {
     e.preventDefault();
     const type=submitbtn.innerText ==="Update"
-    console.log(submitbtn.innerText ==="Update");
     if ( validitemname(itemName, category,type) && validstockLevel(stockLevel) && validreorderLevel(reorderLevel, stockLevel)) {
         dataStorage();
         itemName.value='';
@@ -272,7 +271,7 @@ buybtn.addEventListener('click', function (e) {
     }
     if (buyindex !== -1) {
         const infoCart = data[buyindex];
-        const changedStockLevel = infoCart.stockLevel - Number(quantity.value);
+        const changedStockLevel = Number(infoCart.stockLevel) - Number(quantity.value);
 
         if (changedStockLevel >= 0) {
             infoCart.stockLevel = changedStockLevel;

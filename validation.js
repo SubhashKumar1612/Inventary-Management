@@ -16,19 +16,7 @@ const setSuccess = function (element) {
     childElement.classList.remove('is-invalid');
 };
 
-// const clearFormAfterclose = () => {
-//     itemName.classList.remove('is-invalid', 'is-valid');
-//     stockLevel.classList.remove('is-invalid', 'is-valid');
-//     reorderLevel.classList.remove('is-invalid', 'is-valid');
-//     quantity.classList.remove('is-invalid', 'is-valid');
-//     newText.classList.remove('is-invalid', 'is-valid');
 
-//     // Clear error messages if any
-//     const errorMessages = document.querySelectorAll('.invalid-feedback');
-//     errorMessages.forEach((msg) => msg.textContent = '');
-
-
-// };
 
 const clearFormState = () => {
     const inputControls = document.querySelectorAll('input');
@@ -181,6 +169,9 @@ const validationquantity=(quantity)=>{
     const quantityValue=Number(quantity.value.trim());
     if (quantity.value.trim() === '') {
         setError(quantity, "quantity is required");
+        return false;
+    }else if(isNaN(quantityValue)){
+        setError(quantity, "quantity should be digit");
         return false;
     }else {
         setSuccess(quantity);
