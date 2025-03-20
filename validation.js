@@ -70,12 +70,14 @@ const validateInput = (itemName,stockLevel,reorderLevel) => {
 
 
 const isUniqueName = (name, category) => {
+    console.log("yes i am checking")
     return !data.some(item => item.itemName === name && item.category === category);
 };
 
 const validitemname = (itemname, category,type) => {
     const itemNameValue = itemname.value.trim();
     if(type){
+        console.log('yes i am working if part')
         if (itemNameValue === '') {
             setError(itemname, "Item name is required");
             return false;
@@ -91,6 +93,7 @@ const validitemname = (itemname, category,type) => {
         }
 
     }else{
+        console.log('yes i am working else part')
         if (itemNameValue === '') {
             setError(itemname, "Item name is required");
             return false;
@@ -164,6 +167,16 @@ const validstockLevel = (stockLevel) => {
         return true;
     }
 };
+const validNewText=(newText)=>{
+    const newTextValue=Number(newText.value.trim());
+    if (newText.value.trim() === '') {
+        setError(newText, "newText is required");
+        return false;
+    }else {
+        setSuccess(newText);
+        return true;
+    }
+}
 
 const validationquantity=(quantity)=>{
     const quantityValue=Number(quantity.value.trim());
@@ -182,6 +195,7 @@ window.validationquantity=validationquantity;
 window.validitemname = validitemname;
 window.validstockLevel = validstockLevel;
 window.validreorderLevel = validreorderLevel;
+window.validNewText = validNewText;
 
 export {
     validateInput,

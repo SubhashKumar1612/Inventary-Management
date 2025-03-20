@@ -6,11 +6,12 @@ const category=document.querySelector('#category');
 const stockLevel = document.querySelector('#stockLevel');
 const reorderLevel = document.querySelector('#reorderLevel');
 const searchInput=document.querySelector('#searchInput');
-const newText = document.querySelector('#newText');
+const newText = document.querySelector('#other-input');
 const submitbtn = document.querySelector('#submit-btn');
 const quantity=document.querySelector('#quantity');
 const cancelbtn=document.querySelectorAll('.cancel');
 
+console.log(newText);
 cancelbtn.forEach(el=>{
     el.addEventListener('click',function(e){
         e.preventDefault();
@@ -29,6 +30,11 @@ const clearFormAfterclose = () => {
     const errorMessages = document.querySelectorAll('.error');
     errorMessages.forEach((msg) => msg.textContent = '');
 
+    
+    newText.classList.add('d-none')
+    console.log(newText);
+    newText.value='';
+
     itemName.value='';
     category.value='';
     stockLevel.value='';
@@ -38,13 +44,16 @@ const clearFormAfterclose = () => {
 
 let buyindex=-1;
 let editIndex = -1;
+let type=submitbtn.innerText ==="Update";
+console.log(type);
 
 //itemName.addEventListener('blur', () => validitemname(itemName));
-itemName.addEventListener('blur', () => validitemname(itemName, category));
+itemName.addEventListener('blur', () => validitemname(itemName, category,type));
 stockLevel.addEventListener('blur', () => validstockLevel(stockLevel));
 //reorderLevel.addEventListener('blur', () => validreorderLevel(reorderLevel));
 reorderLevel.addEventListener('blur', () => validreorderLevel(reorderLevel, stockLevel));
 quantity.addEventListener('blur', () => validationquantity(quantity));
+newText.addEventListener('blur',()=>validNewText(newText));
 
 
 category.addEventListener('change',function(){
@@ -56,10 +65,10 @@ category.addEventListener('change',function(){
 })
 const other = () => {
     const category = document.getElementById('category');
-    const newText = document.getElementById('newText');
     
     if (category.value === 'other') {
         newText.classList.remove("d-none");
+        console.log(newText)
     } 
 }
 
@@ -110,7 +119,7 @@ const showData = () => {
         const row = `
             <tr>
                 <td>${data.itemName}</td>
-                <td>${data.category}</td>
+                <td >${data.category}</td>
                 <td>${data.stockLevel} ${warningIcon}</td>
                 <td>${data.reorderLevel}</td>
                 <td>
@@ -137,17 +146,29 @@ const showData = () => {
     });
 };
 
-
+console.log()
 // Handle form submission
 submitbtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const type=submitbtn.innerText ==="Update"
+    type=submitbtn.innerText ==="Update";
+    console.log(type);
+
     if ( validitemname(itemName, category,type) && validstockLevel(stockLevel) && validreorderLevel(reorderLevel, stockLevel)) {
-        dataStorage();
-        itemName.value='';
-        category.value='';
-        stockLevel.value='';
-        reorderLevel.value='';
+        if((category.value.trim()==="other" && validNewText(newText)) ){
+            dataStorage();
+            itemName.value='';
+            category.value='';
+            stockLevel.value='';
+            reorderLevel.value='';
+        }else if(category.value.trim()!=="other" &&category.value.trim()!==''){
+            dataStorage();
+            itemName.value='';
+            category.value='';
+            stockLevel.value='';
+            reorderLevel.value='';
+        }else{
+            validNewText(newText)
+        }
     }
 });
 
