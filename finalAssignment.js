@@ -25,10 +25,14 @@ const clearFormAfterclose = () => {
     quantity.classList.remove('is-invalid', 'is-valid');
     newText.classList.remove('is-invalid', 'is-valid');
 
-    // Clear error messages if any
+    
     const errorMessages = document.querySelectorAll('.error');
     errorMessages.forEach((msg) => msg.textContent = '');
 
+    itemName.value='';
+    category.value='';
+    stockLevel.value='';
+    reorderLevel.value='';
 
 };
 
@@ -110,15 +114,23 @@ const showData = () => {
                 <td>${data.stockLevel} ${warningIcon}</td>
                 <td>${data.reorderLevel}</td>
                 <td>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-cart2 cart text-warning me-2" viewBox="0 0 16 16" data-toggle="modal" data-target="#exampleModal">
+                    <button class="btn cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-cart2 cart text-warning me-2" viewBox="0 0 16 16" data-toggle="modal" data-target="#exampleModal">
                         <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
                       </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-pencil edit text-primary me-2" viewBox="0 0 16 16">
+                    </button>
+
+                    <button class="btn  cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-pencil edit text-primary me-2" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-trash3 delete text-danger" viewBox="0 0 16 16">
+                    </button>
+
+                    <button class="btn  cursor-pointer">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" data-index="${i}" height="20" fill="currentColor" class="bi bi-trash3 delete text-danger" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                       </svg>
+                    </button>
                 </td>
             </tr>`;
         list.innerHTML += row;
@@ -140,8 +152,8 @@ submitbtn.addEventListener('click', (e) => {
 
 document.getElementById('confirmDelete').addEventListener('click', () => {
     if (deleteIndex !== null) {
-        data.splice(deleteIndex, 1); // Delete the data
-        localStorage.setItem('buyStock', JSON.stringify(data));
+        data.splice(deleteIndex, 1);
+        localStorage.setItem('stockData', JSON.stringify(data));
         document.querySelector(".toast").classList.add("show");
         showData()
         const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#deleteModal'));
@@ -180,7 +192,6 @@ document.querySelector('.student-list').addEventListener('click', (e) => {
         // }
 
     }else if(e.target.classList.contains('cart')){
-        console.log(data[idx]);
         buyindex=idx;
         const infoCart = data[idx];
         const modelbuyStock=document.querySelector('.buystock');
