@@ -141,7 +141,9 @@ const showData = () => {
 // Handle form submission
 submitbtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if ( validitemname(itemName, category) && validstockLevel(stockLevel) && validreorderLevel(reorderLevel, stockLevel)) {
+    const type=submitbtn.innerText ==="Update"
+    console.log(submitbtn.innerText ==="Update");
+    if ( validitemname(itemName, category,type) && validstockLevel(stockLevel) && validreorderLevel(reorderLevel, stockLevel)) {
         dataStorage();
         itemName.value='';
         category.value='';
@@ -154,15 +156,22 @@ document.getElementById('confirmDelete').addEventListener('click', () => {
     if (deleteIndex !== null) {
         data.splice(deleteIndex, 1);
         localStorage.setItem('stockData', JSON.stringify(data));
-        document.querySelector(".toast").classList.add("show");
+        showMessage();
         showData()
         const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#deleteModal'));
         modal.hide();
     }
 });
+//console.log(document.querySelector("#toast"))
+const showMessage=()=>{
+    const toast=document.querySelector(".toast");
+    toast.classList.add('show');
+    setTimeout(()=>{
+        toast.classList.remove('show')
+    },2000)
+}
 
 
-//console.log(document.querySelector('.student-list'))
 let deleteIndex = -1;
 document.querySelector('.student-list').addEventListener('click', (e) => {
     e.preventDefault();
@@ -178,18 +187,9 @@ document.querySelector('.student-list').addEventListener('click', (e) => {
         const modal = new bootstrap.Modal(document.querySelector('#formModal'));
         modal.show();
     } else if (e.target.classList.contains('delete')) {
-        // if (confirm("Are you sure you want to delete this record?")) {
-        //     data.splice(idx, 1);
-        //     localStorage.setItem('stockData', JSON.stringify(data));
-        //     document.querySelector(".toast").classList.add("show")
-        //     showData();
-        // }
         deleteIndex = e.target.getAttribute('data-index');
             const modal = new bootstrap.Modal(document.querySelector('#deleteModal'));
             modal.show();
-        // if (e.target.classList.contains('delete')) {
-            
-        // }
 
     }else if(e.target.classList.contains('cart')){
         buyindex=idx;
@@ -287,9 +287,7 @@ buybtn.addEventListener('click', function (e) {
             quantity.classList.remove('is-invalid');
             quantity.classList.remove('is-valid');
             localStorage.setItem('buyStock', JSON.stringify(buyStock));
-            //new bootstrap.Modal(document.querySelector('#buy')).hide();
-            // const modal = new bootstrap.Modal(document.querySelector('#buy'));
-            // modal.hide();
+           
             const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#buy'));
             modal.hide();
             if(modal.hide()){

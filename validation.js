@@ -16,17 +16,19 @@ const setSuccess = function (element) {
     childElement.classList.remove('is-invalid');
 };
 
-const clearFormAfterclose = () => {
-    itemName.classList.remove('is-invalid', 'is-valid');
-    stockLevel.classList.remove('is-invalid', 'is-valid');
-    reorderLevel.classList.remove('is-invalid', 'is-valid');
-    quantity.classList.remove('is-invalid', 'is-valid');
-    newText.classList.remove('is-invalid', 'is-valid');
+// const clearFormAfterclose = () => {
+//     itemName.classList.remove('is-invalid', 'is-valid');
+//     stockLevel.classList.remove('is-invalid', 'is-valid');
+//     reorderLevel.classList.remove('is-invalid', 'is-valid');
+//     quantity.classList.remove('is-invalid', 'is-valid');
+//     newText.classList.remove('is-invalid', 'is-valid');
 
-    // Clear error messages if any
-    const errorMessages = document.querySelectorAll('.invalid-feedback');
-    errorMessages.forEach((msg) => msg.textContent = '');
-};
+//     // Clear error messages if any
+//     const errorMessages = document.querySelectorAll('.invalid-feedback');
+//     errorMessages.forEach((msg) => msg.textContent = '');
+
+
+// };
 
 const clearFormState = () => {
     const inputControls = document.querySelectorAll('input');
@@ -83,24 +85,44 @@ const isUniqueName = (name, category) => {
     return !data.some(item => item.itemName === name && item.category === category);
 };
 
-const validitemname = (itemname, category) => {
+const validitemname = (itemname, category,type) => {
     const itemNameValue = itemname.value.trim();
-    if (itemNameValue === '') {
-        setError(itemname, "Item name is required");
-        return false;
-    } else if (itemNameValue.length > 20) {
-        setError(itemname, "itemName must be less than 20 characters");
-        return false;
-    } else if (itemNameValue.length < 4) {
-        setError(itemname, "itemName must be greater than 4 characters");
-        return false;
-    } else if (!isUniqueName(itemNameValue, category.value)) {
-        setError(itemname, "Item name must be unique within the category");
-        return false;
-    } else {
-        setSuccess(itemname);
-        return true;
+    if(type){
+        if (itemNameValue === '') {
+            setError(itemname, "Item name is required");
+            return false;
+        } else if (itemNameValue.length > 20) {
+            setError(itemname, "itemName must be less than 20 characters");
+            return false;
+        } else if (itemNameValue.length < 4) {
+            setError(itemname, "itemName must be greater than 4 characters");
+            return false;
+        } else {
+            setSuccess(itemname);
+            return true;
+        }
+
+    }else{
+        if (itemNameValue === '') {
+            setError(itemname, "Item name is required");
+            return false;
+        } else if (itemNameValue.length > 20) {
+            setError(itemname, "itemName must be less than 20 characters");
+            return false;
+        } else if (itemNameValue.length < 4) {
+            setError(itemname, "itemName must be greater than 4 characters");
+            return false;
+        } else if (!isUniqueName(itemNameValue, category.value)) {
+            setError(itemname, "Item name must be unique within the category");
+            return false;
+        } else {
+            setSuccess(itemname);
+            return true;
+        }
+
     }
+    
+    
 };
 
 
@@ -171,7 +193,6 @@ window.validstockLevel = validstockLevel;
 window.validreorderLevel = validreorderLevel;
 
 export {
-    clearFormAfterclose,
     validateInput,
     clearFormState
 };

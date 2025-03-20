@@ -11,14 +11,19 @@
 </head>
 <body>
     <div class="container">
+
         <!-- toast  button -->
-          <div class="toast">
-            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-            <div class="toast-body text-success">
-            item is delete 
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+          <div class="toast-container position-absolute top-0 end-0 p-3">
+            <div class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-body bg-danger">
+                item is deleted successfully!!
+              </div>
             </div>
+          </div>
         </div>
-        
+        <!-- toast end here -->
+
         <div class="row my-3">
             <div class="col-md-10">
                 <div class="col-md-8">
