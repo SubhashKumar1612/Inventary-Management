@@ -28,45 +28,6 @@ const clearFormState = () => {
     });
 };
 
-const validateInput = (itemName,stockLevel,reorderLevel) => {
-    let isValid = true;
-    
-    if (!itemName.value.trim()) {
-        setError(itemName, 'ItemName is required');
-        isValid = false;
-    }else setSuccess(itemName);
-
-    if (!stockLevel.value.trim()) {
-        setError(stockLevel, 'stockLevel is required');
-        isValid = false;
-    } else setSuccess(stockLevel);
-
-    if (!reorderLevel.value.trim()) {
-        setError(reorderLevel, 'reorderLevel is required');
-        isValid = false;
-    } else setSuccess(reorderLevel);
-
-    return isValid;
-};
-// const validitemname = (itemname) => {
-//     const itemNameValue=itemname.value.trim();
-//     //console.log(itemNameValue.length>5 && itemNameValue.length<20)
-//     if (itemNameValue=== '') {
-//         setError(itemname, "item name is required");
-//         return false;
-//     }else if(itemNameValue.length>20) {
-//         console.log(itemNameValue)
-//         setError(itemname, "must be less 20 is required");
-//         return false;
-//     }else if(itemNameValue.length<4) {
-//         console.log(itemNameValue)
-//         setError(itemname, "must be greater 4 is required");
-//         return false;
-//     }else {
-//         setSuccess(itemname);
-//         return true;
-//     }
-// };
 
 
 const isUniqueName = (name, category) => {
@@ -93,7 +54,7 @@ const validitemname = (itemname, category,type) => {
         }
 
     }else{
-        console.log('yes i am working else part')
+       
         if (itemNameValue === '') {
             setError(itemname, "Item name is required");
             return false;
@@ -115,23 +76,6 @@ const validitemname = (itemname, category,type) => {
     
     
 };
-
-
-
-// const validreorderLevel = (reorderLevel) => {
-//     const reorderValue=Number(reorderLevel.value.trim());
-//     console.log(reorderValue>1)
-//     if (reorderLevel.value.trim()==='') {
-//         setError(reorderLevel, "stock reorder is required");
-//         return false;
-//     }else if(reorderValue<2){
-//         setError(reorderLevel, "stock reorder must be atleast 2 unit ");
-//         return false;
-//     } else {
-//         setSuccess(reorderLevel);
-//         return true;
-//     }
-// };
 
 const validreorderLevel = (reorderLevel, stockLevel) => {
     const reorderValue = Number(reorderLevel.value.trim());
@@ -198,7 +142,6 @@ window.validreorderLevel = validreorderLevel;
 window.validNewText = validNewText;
 
 export {
-    validateInput,
     clearFormState
 };
 const data = JSON.parse(localStorage.getItem('stockData')) || [];

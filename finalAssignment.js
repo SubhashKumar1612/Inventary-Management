@@ -1,4 +1,4 @@
-import { validateInput, clearFormState } from './validation.js';
+import { clearFormState } from './validation.js';
 
 const form = document.querySelector('#form');
 const itemName = document.querySelector('#itemname');
@@ -60,6 +60,9 @@ category.addEventListener('change',function(){
     if(category.value==='other'){
         other();
     }else {
+        const displayError=document.querySelector('.category-error');
+        console.log(displayError);
+        displayError.innerText='';
         newText.classList.add("d-none");
     }
 })
@@ -69,7 +72,7 @@ const other = () => {
     if (category.value === 'other') {
         newText.classList.remove("d-none");
         console.log(newText)
-    } 
+    }
 }
 
 
@@ -117,7 +120,7 @@ const showData = () => {
           </svg>`
         : '';
         const row = `
-            <tr>
+            <tr class="align-items-center">
                 <td>${data.itemName}</td>
                 <td >${data.category}</td>
                 <td>${data.stockLevel} ${warningIcon}</td>
@@ -148,12 +151,20 @@ const showData = () => {
 
 console.log()
 // Handle form submission
+
+const isValidForm = () => {
+    return validitemname(itemName, category, type) &&
+           validstockLevel(stockLevel) &&
+           validreorderLevel(reorderLevel, stockLevel);
+};
+
+
 submitbtn.addEventListener('click', (e) => {
     e.preventDefault();
     type=submitbtn.innerText ==="Update";
     console.log(type);
 
-    if ( validitemname(itemName, category,type) && validstockLevel(stockLevel) && validreorderLevel(reorderLevel, stockLevel)) {
+    if (isValidForm()) {
         if((category.value.trim()==="other" && validNewText(newText)) ){
             dataStorage();
             itemName.value='';

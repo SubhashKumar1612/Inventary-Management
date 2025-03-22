@@ -68,8 +68,8 @@
                                     <option value="other" id="other">Other</option>
                                     <input type="text" class="form-control d-none" id="other-input" >
                                 </select>
-                                <input type="text" id="newText" class="d-none" placeholder="Enter new category">
-                                <div class="error text-danger"></div>
+                                <!-- <input type="text" id="newText" class="d-none" placeholder="Enter new category"> -->
+                                <div class="error text-danger category-error"></div>
                             </div>
                             
                             <div class="col-md-10 mb-3">
@@ -92,7 +92,7 @@
             </div>
         </div>
 
-<!-- search element -->
+        <!-- search element -->
         <div class="row">
             <div class="col-12">
                 <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by Item Name, Category, or Stock Level"/>
@@ -101,7 +101,8 @@
 
 
         <!-- Table -->
-        <div class="col-12">
+        <div class="row">
+          <div class="col-12">
             <table class="table table-striped ">
                 <thead>
                     <tr>
@@ -133,15 +134,16 @@
                 </tbody>
             </table>
         </div>
+        </div>
 
 
         <section class="my-5" >
           <h1 class="text-center  my-5">Buyed Stock</h1>
-          <div class="col-md-12  d-flex" id="card">
+          <div class="col-md-12  d-md-flex" id="card">
           </div>
-      </section> 
+        </section> 
 
-      <button id="viewBoughtItems" class="btn btn-primary my-5">View Carted Items</button>
+        <button id="viewBoughtItems" class="btn btn-primary my-5">View Carted Items</button>
 
     </div>
 
